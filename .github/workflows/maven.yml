@@ -19,5 +19,14 @@ jobs:
           distribution: temurin
           java-version: 21
 
-      - name: Build with Maven
-        run: mvn -B package --file pom.xml
+      - name: Build (compile only)
+        run: mvn -B compile --file pom.xml
+
+      - name: Run unit tests
+        run: mvn -B test --file pom.xml
+
+      - name: Publish Test Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: junit-report
+          path: target/surefire-reports/
