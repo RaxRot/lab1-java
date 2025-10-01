@@ -1,33 +1,47 @@
 package com.raxrot;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import static org.junit.jupiter.api.Assertions.*;
 class StudentTest {
-    @Test
-    void testStudentGettersAndSetters() {
-        Student s = new Student();
-        s.setName("Alice");
-        s.setAge(20);
+    private Student fer;
+    private Student ryan;
 
-        assertEquals("Alice", s.getName());
-        assertEquals(20, s.getAge());
+    @BeforeAll
+    public static void onceExecutedBeforeAll() {
+        System.out.println("Test Student Class");
+    }
+
+    @BeforeEach
+    public void setup() {
+        fer = new Student(1L, "fer");
+        fer.addGrade(100);
+        fer.addGrade(80);
+    }
+
+    @DisplayName("Check data in Student object")
+    @Test
+    public void testCreateStudent() {
+        assertNull(ryan);
+        assertNotNull(fer);
+    }
+
+    @Disabled("Dissable Test")
+    @Test
+    public void testStudentFields() {
+        assertEquals(1L, fer.getId());
+        assertEquals("fer", fer.getName());
+        assertEquals(2, fer.getGrades().size());
     }
 
     @Test
-    void testAllArgsConstructor() {
-        Student s = new Student("Bob", 25);
-
-        assertEquals("Bob", s.getName());
-        assertEquals(25, s.getAge());
+    public void testAddGrade() {
+        assertEquals(100, fer.getGrades().get(0));
+        assertEquals(80, fer.getGrades().get(1));
     }
 
     @Test
-    void testToStringContainsName() {
-        Student s = new Student("Charlie", 30);
-
-        assertTrue(s.toString().contains("Charlie"));
+    public void testAverageGrade() {
+        assertEquals(90, fer.getGradeAverage(), 0.01);
     }
 }
